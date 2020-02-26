@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, userEvent, wait, waitForElement, debug, getByDisplayValue, getByTestId } from '@testing-library/react';
+import { render, userEvent, wait, waitForElement, debug, getByDisplayValue, getByTestId, rerender, queryByTestId } from '@testing-library/react';
 import App from './App';
 import 'mutationobserver-shim';
 
@@ -9,7 +9,7 @@ import { act } from 'react-dom/test-utils';
 jest.mock('./api/fetchShow')
 // console.log(mockFetchShow)
 
-const shows = {
+const show = {
     name: 'Stranger Things',
     type: 'Scripted',
     language: 'English',
@@ -103,16 +103,11 @@ const shows = {
         }]}}
 
 test('Loading state is functional', async () => {
-    mockFetchShow.mockResolvedValueOnce(shows)
-    console.log(mockFetchShow)
-    const { getByText } = render(<App />)
+    mockFetchShow.mockResolvedValueOnce(show)
+    const { getByText, rerender, getByTestId } = render(<App />)
     getByText(/fetching data/i)
-    mockFetchShow()
-    // getByText(/select/i)
-    // act(() => {
-    //     userEvent(click)
-    // })
-    
+
+    getByText(/select/i)
 })
 
 
